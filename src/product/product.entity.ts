@@ -11,7 +11,7 @@ import { ProductImageEntity } from './product-imagem.entity';
 import { ProductCharacteristicsEntity } from './product-characteristic.entity';
 
 @Entity({ name: 'products' })
-export class ProductEntity {
+export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -42,16 +42,15 @@ export class ProductEntity {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
 
-  @OneToMany(
-    () => ProductImageEntity,
-    (produtoImagemEntity) => produtoImagemEntity.product,
-    { cascade: true, eager: true },
-  )
+  @OneToMany(() => ProductImageEntity, (imageProduct) => imageProduct.product, {
+    cascade: true,
+    eager: true,
+  })
   images: ProductImageEntity[];
 
   @OneToMany(
     () => ProductCharacteristicsEntity,
-    (produtoCaracteristicaEntity) => produtoCaracteristicaEntity.product,
+    (characteristics) => characteristics.product,
     { cascade: true, eager: true },
   )
   characteristics: ProductCharacteristicsEntity[];

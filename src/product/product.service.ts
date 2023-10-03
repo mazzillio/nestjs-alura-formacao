@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ListaProdutoDTO } from './dto/ListProduct.dto';
-import { ProductEntity } from './product.entity';
+import { ListProdutoDTO } from './dto/ListProduct.dto';
+import { Product } from './product.entity';
 import { Repository } from 'typeorm';
 import { UpdateProductDTO } from './dto/UpdateProduct.dto';
 import { CreateProductDTO } from './dto/CreateProduct.dto';
@@ -9,12 +9,12 @@ import { CreateProductDTO } from './dto/CreateProduct.dto';
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectRepository(ProductEntity)
-    private readonly productRepository: Repository<ProductEntity>,
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
   ) {}
 
   async createProduct(productData: CreateProductDTO) {
-    const productEntity = new ProductEntity();
+    const productEntity = new Product();
 
     productEntity.name = productData.name;
     productEntity.value = productData.value;
@@ -28,7 +28,7 @@ export class ProductService {
     return this.productRepository.save(productEntity);
   }
 
-  async listProducts() {
+  async listProducts(): Promise<ListProdutoDTO[]> {
     const saveProducts = await this.productRepository.find({
       relations: {
         images: true,
@@ -37,7 +37,7 @@ export class ProductService {
     });
     const productsList = saveProducts.map(
       (product) =>
-        new ListaProdutoDTO(
+        new ListProdutoDTO(
           product.id,
           product.name,
           product.characteristics,

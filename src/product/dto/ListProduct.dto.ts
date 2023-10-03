@@ -8,7 +8,7 @@ class ListImageProductDTO {
   description: string;
 }
 
-export class ListaProdutoDTO {
+export class ListProdutoDTO {
   constructor(
     readonly id: string,
     readonly name: string,
