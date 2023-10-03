@@ -28,7 +28,7 @@ export class UserService {
     return usersList;
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User> {
     const checkEmail = await this.userRepository.findOne({
       where: { email },
     });
@@ -36,11 +36,11 @@ export class UserService {
     return checkEmail;
   }
 
-  async updateUser(id: string, newData: UpdateUserDTO) {
+  async updateUser(id: string, newData: UpdateUserDTO): Promise<void> {
     await this.userRepository.update(id, newData);
   }
 
-  async deletUser(id: string) {
+  async deletUser(id: string): Promise<void> {
     await this.userRepository.delete(id);
   }
 }
