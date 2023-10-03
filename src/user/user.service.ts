@@ -15,16 +15,14 @@ export class UserService {
 
   async createUser(userData: CreateUserDTO): Promise<User> {
     const user = new User();
-
     user.email = userData.email;
     user.password = userData.password;
     user.name = userData.name;
-    console.log('User');
 
     return this.userRepository.save(user);
   }
 
-  async listUsers() {
+  async listUsers(): Promise<ListUsersDTO[]> {
     const users = await this.userRepository.find();
     const usersList = users.map((user) => new ListUsersDTO(user.id, user.name));
     return usersList;
@@ -34,7 +32,7 @@ export class UserService {
     const checkEmail = await this.userRepository.findOne({
       where: { email },
     });
-    console.log('check email');
+
     return checkEmail;
   }
 

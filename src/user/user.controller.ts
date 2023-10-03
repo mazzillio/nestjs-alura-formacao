@@ -27,7 +27,7 @@ export class UserControler {
   }
 
   @Get()
-  async listUsers() {
+  async listUsers(): Promise<ListUsersDTO[]> {
     const users = await this.userService.listUsers();
 
     return users;
