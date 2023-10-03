@@ -10,7 +10,7 @@ import {
 import { ProductImageEntity } from './product-imagem.entity';
 import { ProductCharacteristicsEntity } from './product-characteristic.entity';
 
-@Entity({ name: 'produtos' })
+@Entity({ name: 'products' })
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

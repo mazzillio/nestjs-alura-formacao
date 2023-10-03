@@ -13,6 +13,7 @@ export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
   constructor(private userService: UserService) {}
 
   async validate(value: any): Promise<boolean> {
+    console.log('validador');
     const userAlreadyExists = await this.userService.findByEmail(value);
     return !userAlreadyExists;
   }
