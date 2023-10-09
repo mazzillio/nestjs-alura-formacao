@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { ProductImageEntity } from './product-imagem.entity';
 import { ProductCharacteristicsEntity } from './product-characteristic.entity';
+import { OrderItem } from '../order/orderItem.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -51,4 +52,7 @@ export class Product {
     { cascade: true, eager: true },
   )
   characteristics: ProductCharacteristicsEntity[];
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
+  orderItems: OrderItem[];
 }
