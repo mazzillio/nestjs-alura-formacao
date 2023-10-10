@@ -30,6 +30,10 @@ export class ProductController {
   async listAll() {
     return this.productService.listProducts();
   }
+  @Get('/:id')
+  async getOne(@Param('id') id: string) {
+    return this.productService.getProduct(id);
+  }
 
   @Put('/:id')
   async update(@Param('id') id: string, @Body() productData: UpdateProductDTO) {

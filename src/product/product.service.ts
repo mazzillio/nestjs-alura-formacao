@@ -52,4 +52,16 @@ export class ProductService {
   async deletProduct(id: string) {
     await this.productRepository.delete(id);
   }
+  async getProduct(id: string) {
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+    return new ListProdutoDTO(
+      product.id,
+      product.name,
+      product.characteristics,
+      product.images,
+    );
+  }
 }
