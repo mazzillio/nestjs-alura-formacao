@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { UpdateProductDTO } from './dto/UpdateProduct.dto';
 import { CreateProductDTO } from './dto/CreateProduct.dto';
 import { ProductService } from './product.service';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('products')
 export class ProductController {
@@ -27,10 +29,12 @@ export class ProductController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async listAll() {
     return this.productService.listProducts();
   }
   @Get('/:id')
+  @UseInterceptors(CacheInterceptor)
   async getOne(@Param('id') id: string) {
     return this.productService.getProduct(id);
   }
