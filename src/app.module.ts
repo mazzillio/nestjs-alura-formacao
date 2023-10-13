@@ -4,9 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER } from '@nestjs/core';
 
 import { PostgresConfigService } from './config/postgres.config.service';
-import { UserModule } from './user/user.module';
-import { ProductModule } from './product/product.module';
-import { OrderModule } from './order/order.module';
+import { UserModule } from './modules/user/user.module';
+import { ProductModule } from './modules/product/product.module';
+import { OrderModule } from './modules/order/order.module';
 import { ExceptionFilterGlobal } from './resources/filters/exeception-filter';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';

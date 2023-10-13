@@ -11,7 +11,7 @@ import { UpdateUserDTO } from './dto/Updateuser.dto';
 import { CreateUserDTO } from './dto/CreateUser.dto';
 import { ListUsersDTO } from './dto/ListUsers';
 import { UserService } from './user.service';
-import { PasswordHash } from '../resources/pipes/password-hash.pipe';
+import { PasswordHash } from '../../resources/pipes/password-hash.pipe';
 interface IOutputUser {
   user: ListUsersDTO;
   message: string;
