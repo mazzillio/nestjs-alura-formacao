@@ -11,26 +11,34 @@ import { UpdateUserDTO } from './dto/Updateuser.dto';
 import { CreateUserDTO } from './dto/CreateUser.dto';
 import { ListUsersDTO } from './dto/ListUsers';
 import { UserService } from './user.service';
-
+import { PasswordHash } from '../resources/pipes/password-hash.pipe';
+interface IOutputUser {
+  user: ListUsersDTO;
+  message: string;
+}
 @Controller('/users')
 export class UserControler {
   constructor(private userService: UserService) {}
 
   @Post()
-  async createUser(@Body() userData: CreateUserDTO) {
-    const createdUser = await this.userService.createUser(userData);
-
+  async createUser(
+    @Body() userData: CreateUserDTO,
+    @Body('password', PasswordHash) passwordHash: string,
+  ): Promise<IOutputUser> {
+    console.log(passwordHash);
+    const createdUser = await this.userService.createUser({
+      ...userData,
+      password: passwordHash,
+    });
     return {
-      usuario: new ListUsersDTO(createdUser.id, createdUser.name),
-      messagem: 'created user',
+      user: new ListUsersDTO(createdUser.id, createdUser.name),
+      message: 'created user',
     };
   }
 
   @Get()
   async listUsers(): Promise<ListUsersDTO[]> {
-    const users = await this.userService.listUsers();
-
-    return users;
+    return await this.userService.listUsers();
   }
 
   @Put('/:id')

@@ -30,10 +30,7 @@ export class UserService {
     const checkEmail = await this.userRepository.findOne({
       where: { email },
     });
-    if (!checkEmail) {
-      throw new NotFoundException('User not found');
-    }
-    return checkEmail;
+    return <User>checkEmail;
   }
 
   async updateUser(id: string, newData: UpdateUserDTO): Promise<void> {
