@@ -10,6 +10,7 @@ import { OrderModule } from './modules/order/order.module';
 import { ExceptionFilterGlobal } from './resources/filters/exeception-filter';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
+import { AuthenticateModule } from './modules/authenticate/authenticate.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { redisStore } from 'cache-manager-redis-yet';
       }),
       isGlobal: true,
     }),
+    AuthenticateModule,
   ],
   providers: [
     {
