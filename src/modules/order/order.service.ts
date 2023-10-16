@@ -6,6 +6,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { User } from '../user/user.entity';
 import { OrderStatus } from './enum/orderstatus.enum';
@@ -86,16 +87,29 @@ export class OrderService {
           id: userId,
         },
       },
+      relations: {
+        user: true,
+      },
     });
     if (!order) {
       throw new NotFoundException('Order not found');
     }
     return order;
   }
-  async updateOrder(orderId: string, updateData: UpdateOrderDto) {
-    const order = await this.orderRepository.findOneBy({ id: orderId });
+  async updateOrder(
+    userId: string,
+    orderId: string,
+    updateData: UpdateOrderDto,
+  ) {
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+      relations: { user: true },
+    });
     if (!order) {
       throw new NotFoundException('Oder not found');
+    }
+    if (order.user.id !== userId) {
+      throw new ForbiddenException('Order not found');
     }
     Object.assign(order, <Order>updateData);
     return this.orderRepository.save(order);

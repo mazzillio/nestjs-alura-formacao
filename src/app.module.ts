@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Module, ClassSerializerInterceptor } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 import { PostgresConfigService } from './config/postgres.config.service';
 import { UserModule } from './modules/user/user.module';
@@ -36,6 +36,10 @@ import { AuthenticateModule } from './modules/authenticate/authenticate.module';
     {
       provide: APP_FILTER,
       useClass: ExceptionFilterGlobal,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
     },
   ],
 })

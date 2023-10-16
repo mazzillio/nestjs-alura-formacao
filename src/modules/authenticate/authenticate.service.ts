@@ -27,7 +27,7 @@ export class AuthenticateService {
       userName: user.name,
     };
     return {
-      token_access: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload),
     };
   }
 }
