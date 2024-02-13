@@ -25,7 +25,6 @@ export class UserControler {
     @Body() userData: CreateUserDTO,
     @Body('password', PasswordHash) passwordHash: string,
   ): Promise<IOutputUser> {
-    console.log(passwordHash);
     const createdUser = await this.userService.createUser({
       ...userData,
       password: passwordHash,
